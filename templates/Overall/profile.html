@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARUMT Exam Attendance</title>
+    <!-- Favicon -->
+    <link href="../../static/assets/img/favicon.png" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../static/css/owl.carousel.css" />
+    <link rel="stylesheet" href="../../static/css/style.css" />
+    <style>
+		.preloader {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(255, 255, 255, 0.8);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000;
+			transition: opacity 0.5s ease;
+			pointer-events: none; /* Allow interaction with content behind the preloader */
+		}
+
+		.loader {
+			border: 8px solid #f3f3f3;
+			border-top: 8px solid #3498db;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		/* Set opacity to 0 to hide the preloader */
+		.preloader.hidden {
+			opacity: 0;
+			pointer-events: none;
+		}
+	</style>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            padding: 10px 20px 20px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            margin: 60px auto;
+        }
+
+        .profile-picture-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture-container:hover .profile-picture {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #4CAF50; 
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+        }
+
+        .profile-data {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .data-label {
+            flex: 1;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .data-value {
+            flex: 2;
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .custom-btn {
+            position: absolute;
+            right: 195px;
+            bottom: 20px;
+            background-color: black;
+            border-radius: 50%;
+            padding: 5px;
+            border-color: grey;
+            color: white; 
+            cursor: pointer; 
+            }
+
+        .custom-btn:hover {
+            background-color: #333; 
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .custom-btn {
+                right: 200px; 
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- preloader -->
+	<div class="preloader" id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header section -->
+    <header class="header-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="site-logo">
+                        <img src="../../static/assets/img/logo.png" alt="">
+                    </div>
+                    <div class="nav-switch">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <nav class="main-menu">
+                        <ul class="header-navigation">
+                            <li><a href="../Overall/index.html" class="active">Home</a></li>
+                            <li class="dropdown">
+                                <a href="#">Exam Attendance</a>
+                                <ul class="sub-menu">
+                                    <li><a href="../IdentificationAndVerification/identificationCamera.html">Identification & Verification</a></li>
+                                    <li class="nested-dropdown">
+                                        <a href="#">Exam & Student Management</a>
+                                        <ul class="nested-sub-menu">
+                                            <li><a href="../ExamManagement/examdetail.html">Exam Management</a></li>
+                                            <li><a href="../StudentManagement/studentdetail.html">Student Management</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Class Attendance</a></li>
+                            {% if session.user and session.user.role == 'lecturer' %}
+							{% else %}
+								<li><a href="../Overall/profile.html">Profile</a></li>
+							{% endif %}
+                            <!-- <li class="dropdown">
+                                <a href="#">Login</a>
+                                <ul class="sub-menu" style="width:150px;">
+                                    <li><a href="../Overall/studentLogin.html">Student</a></li>
+                                    <li><a href="../Overall/lecturerLogin.html">Lecturer</a></li>
+                                    <li><a href="../Overall/profile.html">Profile</a></li>
+                                </ul>
+                            </li> -->
+                            {% if session.user and (session.user.role == 'lecturer' or session.user.role == 'student') %}
+								<li><a href="{{ url_for('logout') }}">Logout</a></li>
+							{% else %}
+							{% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header section end -->
+    {% if session.user and session.user.role == "student" %}
+        <!-- Page info -->
+        <div class="page-info-section set-bg" id="background" data-setbg="../../static/assets/img/page-bg/3.jpg"
+            style="width: 100%; height: 135%;">
+            <div class="container">
+                <div class="site-breadcrumb">
+                    <a href="../Overall/index.html">Home</a>
+                    <span>Student Profile</span>
+                </div>
+            </div>
+            <div class="profile-container">
+                <div class="profile-picture-container">
+                    <img class="profile-picture" src="../{{ students['student_profileimage'] }}" alt="Profile Picture">
+                    <!-- <img class="profile-picture" src="../../static/assets/img/profile.jpg" alt="Profile Picture"> -->
+                    <button id="openModalBtn" class="custom-btn">
+                        <span class="icon">📷</span>
+                     </button>
+                </div>
+                <div class="profile-data">  
+                    <div class="data-row">
+                        <div class="data-label">Student ID:</div>
+                        <div class="data-value">{{ students['student_id'] }}</div>
+                    </div>
+                    <div class="data-row">
+                        <div class="data-label">Student Name:</div>
+                        <div class="data-value">{{ students['student_name'] }}</div>
+                    </div>
+                    <div class="data-row">
+                        <div class="data-label">Gender:</div>
+                        <div class="data-value">{{ students['student_gender'] }}</div>
+                    </div>
+                    <div class="data-row">
+                        <div class="data-label">Student Email:</div>
+                        <div class="data-value">{{ students['student_email'] }}</div>
+                    </div>
+                    <div class="data-row">
+                        <div class="data-label">Examination Status:</div>
+                        <div class="data-value">{{ students['student_status'] }} Status</div>
+                    </div>
+                    <div class="data-row">
+                        <div class="data-label">Student Status:</div>
+                        <div class="data-value" style="font-weight:bold;">
+                            {% if students['student_verify'] == 0 %}
+                                Unverified
+                            {% else %}
+                                Verified
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <div class="data-value">
+                            {% if students['student_uploadedfile'] %}
+                                <span class="d-block text-muted mt-2" id="fileName" style="text-align:center;"></span>
+                                <script>
+                                    var fileName = "{{ students['student_uploadedfile'] }}";
+                                    var shortenedFileName = fileName.split(/[\\\/]/).pop().replace(/^Uploads/, '');
+                                    document.getElementById("fileName").innerText = 'File Name: '+ shortenedFileName;
+                                </script>
+                            {% else %}
+                                <label for="pdfFileInput" class="btn btn-outline-primary btn-block">
+                                    <input type="file" id="pdfFileInput" name="pdfFileInput" accept=".pdf" style="display: none;" onchange="displayFileName()">Choose Slip
+                                </label>
+                                <span id="pdfFileName" class="d-block text-muted mt-2" style="text-align:center;">No file selected</span>                    
+                                <button class="btn btn-success btn-block mt-2" onclick="submitExamSlip()">Submit Exam Slip</button>
+                            {% endif %}      
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-primary" id="exampleModalLabel">Upload Profile Picture</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="fileInput" class="btn btn-outline-primary btn-block">Select a Photo</label>
+                                <input type="file" id="fileInput" name="fileInput" accept=".png, .jpg, .jpeg" style="display: none;" onchange="displayImageName()">
+                                <span id="imageName" class="d-block text-muted mt-2">No file selected</span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-block" onclick="uploadPhoto(event)" style="background-color: green;">Upload Photo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Modal -->
+            </div>
+        </div>
+        <!-- Page info end -->
+    {% else %}
+        Access Denied. You must be logged in as <b>student</b> to view this page.
+    {% endif %}
+
+    <script>
+		document.addEventListener("DOMContentLoaded", function() {
+			document.getElementById("preloader").classList.add("hidden");
+		});
+		setTimeout(function() {
+			document.getElementById("preloader").classList.add("hidden");
+		}, 10000);
+	</script>
+
+    <script>
+        // Function to open the modal
+        function openModal() {
+            $('#uploadModal').modal('show');
+        }
+
+        function displayImageName() {
+            var value = document.getElementById('fileInput');
+            var imageNameDisplay = document.getElementById('imageName');
+            imageNameDisplay.innerText = value.files.length > 0 ? value.files[0].name : 'No file selected';
+        }
+    
+        function uploadPhoto() {
+            var fileInput = document.getElementById('fileInput');
+
+            if (fileInput.files.length > 0) {
+                var formData = new FormData();
+                formData.append('fileInput', fileInput.files[0]);
+
+                fetch('/upload_profile_image', {
+                    method: 'POST', 
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'  
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile picture updated successfully');
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Please select a file');
+            }
+        }
+    
+        document.getElementById('openModalBtn').addEventListener('click', openModal);
+
+        document.getElementById('fileInput').addEventListener('change', function () {
+            var fileNameSpan = document.getElementById('imageName');
+            var imageName = this.files[0].name;
+            fileNameSpan.textContent = imageName;
+        }
+        );
+    </script>
+
+    <script>
+        function displayFileName() {
+            var input = document.getElementById('pdfFileInput');
+            var fileNameDisplay = document.getElementById('pdfFileName');
+            fileNameDisplay.innerText = input.files.length > 0 ? input.files[0].name : 'No file selected';
+        }
+
+        function submitExamSlip() {
+            var input = document.getElementById('pdfFileInput');
+            if (input.files.length > 0) {
+                var file = input.files[0];
+                var formData = new FormData();
+                formData.append('fileInput', file);
+
+                // Use AJAX to send the file to the server
+                $.ajax({
+                    url: '/upload_slip',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        alert("Exam Authorisation Slip is uploaded successfully");
+                        location.reload();
+                    },
+                    error: function(error) {
+                        alert('Error submitting file. Please try again.');
+                        location.reload();
+                    }
+                });
+            } else {
+                alert('Please select a file before submitting.');
+            }
+        }
+    </script>
+
+    <!--====== Javascripts & Jquery ======-->
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/mixitup.min.js"></script>
+    <script src="../../static/js/circle-progress.min.js"></script>
+    <script src="../../static/js/owl.carousel.min.js"></script>
+    <script src="../../static/js/main.js"></script>
+</body>
+
+</html>

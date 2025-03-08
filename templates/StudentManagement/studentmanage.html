@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARUMT Exam Attendance</title>
+    <!-- Favicon -->
+    <link href="../../static/assets/img/favicon.png" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../static/css/owl.carousel.css" />
+    <link rel="stylesheet" href="../../static/css/style.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    
+        .form-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin: 60px auto;
+            max-width: 650px;
+        }
+    
+        .form-step {
+            display: none;
+            text-align: left;
+            margin-top: 20px; /* Add margin to control vertical spacing */
+        }
+    
+        .form-step.active {
+            display: block;
+        }
+    
+        .form-label {
+            display: block;
+            margin-top: 10px;
+        }
+    
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+    
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    
+        .form-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    
+        .form-button.cancel {
+            background-color: #f44336;
+            color: white;
+        }
+    
+        .form-button.back {
+            background-color: #007BFF;
+            color: white;
+        }
+    
+        .form-button.next,
+        .form-button.confirm {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header section -->
+    <header class="header-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="site-logo">
+                        <img src="../../static/assets/img/logo.png" alt="">
+                    </div>
+                    <div class="nav-switch">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <nav class="main-menu">
+                        <!-- Independent navigation area with a background color -->
+                        <ul class="header-navigation">
+                            <li><a href="../Overall/index.html" class="active">Home</a></li>
+                            <li class="dropdown">
+                                <a href="#">Exam Attendance</a>
+                                <ul class="sub-menu">
+                                    <li><a href="../IdentificationAndVerification/identificationCamera.html">Identification & Verification</a></li>
+                                    <li class="nested-dropdown">
+                                        <a href="#">Exam & Student Management</a>
+                                        <ul class="nested-sub-menu">
+                                            <li><a href="../ExamManagement/examdetail.html">Exam Management</a></li>
+                                            <li><a href="../StudentManagement/studentdetail.html">Student Management</a></li>
+                                            <!-- Add more options as needed -->
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Class Attendance</a></li>
+                            <li class="dropdown">
+                                <a href="#">Login</a>
+                                <ul class="sub-menu" style="width:150px;">
+                                    <li><a href="../Overall/studentLogin.html">Student</a></li>
+                                    <li><a href="../Overall/lecturerLogin.html">Lecturer</a></li>
+                                    <li><a href="../Overall/profile.html">Profile</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header section end -->
+
+    <!-- Page info -->
+    <div class="page-info-section set-bg" data-setbg="../static/assets/img/page-bg/4.jpg"
+        style="width: 100%; height: 110%;">
+        <div class="container">
+            <div class="site-breadcrumb">
+                <a href="../Overall/index.html">Home</a>
+                <span>Student Management</span>
+            </div>
+        </div>
+        <div class="form-container">
+            <form action="/studentmanage", method="POST">
+                <div id="form-step1" class="form-step active">
+                    <h2>Venue Information</h2>
+                    <label class="form-label" for="venueID">Venue:</label>
+                        <select id="venueID" class="form-input" required>
+                            <option value="venue1">R1</option>
+                            <option value="venue2">PA1</option>
+                            <option value="venue3">V1</option>
+                            <option value="venue4">SB1</option>
+                        </select>
+                    <label class="form-label" for="examStatus">Status:</label>
+                    <select id="examStatus" class="form-input" required>
+                        <option value="venue1">Main (M)</option>
+                        <option value="venue2">Resit (R)</option>
+                    </select>
+                    <div class="form-buttons">
+                        <!-- <button type="button" class="form-button cancel">Cancel</button> -->
+                        <button type="button" class="form-button next" style="margin-left:500px;">Next</button>
+                    </div>
+                </div>
+                <div id="form-step2" class="form-step">
+                    <h2>Student Index Range</h2>
+                    <label class="form-label" for="examMinimumIndex">Minimum Index:</label>
+                    <input type="text" id="examMinimumIndex" class="form-input" placeholder="Enter Minimum Index" required>
+                    <label class="form-label" for="examMaximumIndex">Maximum Index:</label>
+                    <input type="text" id="examMaximumIndex" class="form-input" placeholder="Enter Maximum Index" required>
+                    <div class="form-buttons">
+                        <button type="button" class="form-button back">Back</button>
+                        <button type="button" class="form-button cancel">Cancel</button>
+                        <div action="/exammanage" method="POST">
+                            <button type="submit" class="form-button confirm">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Page info end -->
+
+    <script>
+        const formStep1 = document.getElementById("form-step1");
+        const formStep2 = document.getElementById("form-step2");
+        const formStep3 = document.getElementById("form-step3");
+    
+        const nextButton1 = document.querySelector("#form-step1 .next");
+        const backButton2 = document.querySelector("#form-step2 .back");
+        const backButton3 = document.querySelector("#form-step3 .back");
+    
+        nextButton1.addEventListener("click", () => {
+            formStep1.classList.remove("active");
+            formStep2.classList.add("active");
+        });
+    
+        backButton2.addEventListener("click", () => {
+            formStep2.classList.remove("active");
+            formStep1.classList.add("active");
+        });
+    
+        backButton3.addEventListener("click", () => {
+            formStep3.classList.remove("active");
+            formStep2.classList.add("active");
+        });
+    </script>
+
+    <!--====== Javascripts & Jquery ======-->
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/mixitup.min.js"></script>
+    <script src="../../static/js/circle-progress.min.js"></script>
+    <script src="../../static/js/owl.carousel.min.js"></script>
+    <script src="../../static/js/main.js"></script>
+</body>
+
+</html>

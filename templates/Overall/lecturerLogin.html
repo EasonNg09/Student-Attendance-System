@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Login</title>
+    <!-- Favicon -->
+    <link href="../../static/assets/img/favicon.png" rel="shortcut icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,500,500i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../static/css/owl.carousel.css" />
+    <link rel="stylesheet" href="../../static/css/style.css" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!-- Header section -->
+    <header class="header-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="site-logo">
+                        <img src="../../static/assets/img/logo.png" alt="">
+                    </div>
+                    <div class="nav-switch">
+                        <i class="fa fa-bars"></i>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <nav class="main-menu">
+                        <!-- Independent navigation area with a background color -->
+                        <ul class="header-navigation">
+                            <li><a href="../Overall/index.html" class="active">Home</a></li>
+                            <li class="dropdown">
+                                <a href="#">Exam Attendance</a>
+                                <ul class="sub-menu">
+                                    <li><a href="../IdentificationAndVerification/identificationCamera.html">Identification & Verification</a></li>
+                                    <li class="nested-dropdown">
+                                        <a href="#">Exam & Student Management</a>
+                                        <ul class="nested-sub-menu">
+                                            <li><a href="../ExamManagement/examdetail.html">Exam Management</a></li>
+                                            <li><a href="../StudentManagement/studentdetail.html">Student Management</a></li>
+                                            <!-- Add more options as needed -->
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Class Attendance</a></li>
+                            <li class="dropdown">
+                                <a href="#">Login</a>
+                                <ul class="sub-menu" style="width:150px;">
+                                    <li><a href="../Overall/studentLogin.html">Student</a></li>
+                                    <li><a href="../Overall/lecturerLogin.html">Lecturer</a></li>
+                                    <li><a href="../Overall/profile.html">Profile</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header section end -->
+
+    <!-- Page info -->
+    <div class="page-info-section set-bg" data-setbg="../../static/assets/img/page-bg/1.jpg"
+        style="width: 100%; height: 100%;">
+        <div class="container">
+            <div class="site-breadcrumb">
+                <a href="../Overall/index.html">Home</a>
+                <span>Lecturer Login</span>
+            </div>
+        </div>
+        <div class="login-container"
+            style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); text-align: center; margin: 60px auto; max-width: 400px;">
+            <h1 style="font-size: 24px;">Lecturer Login</h1>
+            <form id="login-form" action="/lecturerlogin" method="POST" style="display: flex; flex-direction: column; align-items: center;">
+                <div class="form-group" style="margin: 10px 0; text-align: left; width: 100%;">
+                    <label for="student-id">Lecturer ID:</label>
+                    <input type="text" id="student-id" name="student-id" placeholder="Enter Lecturer ID" required
+                        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 3px; font-size: 16px;">
+                </div>
+                <div class="form-group" style="margin: 10px 0; text-align: left; width: 100%;">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required
+                        style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 3px; font-size: 16px;">
+                </div>
+                <div class="form-buttons"
+                    style="display: flex; justify-content: space-between; margin-top: 20px; width: 100%;">
+                    <button type="button" class="cancel-button"
+                        style="width: 45%; padding: 10px 20px; border: none; border-radius: 3px; font-size: 16px; cursor: pointer; background-color: #f44336; color: white;">
+                        Cancel
+                    </button>
+                    <button type="submit" class="login-button"
+                        style="width: 45%; padding: 10px 20px; border: none; border-radius: 3px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color: white;">
+                        Login
+                    </button>
+                </div>
+                <a href="#" class="forgot-password"
+                    style="display: block; text-align: center; margin-top: 10px; text-decoration: none; color: #007BFF; font-size: 14px; width: 100%;">
+                    Forgot Password?
+                </a>
+            </form>
+        </div>
+    </div>
+    <!-- Page info end -->
+
+
+
+    <!--====== Javascripts & Jquery ======-->
+    <script src="../../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/mixitup.min.js"></script>
+    <script src="../../static/js/circle-progress.min.js"></script>
+    <script src="../../static/js/owl.carousel.min.js"></script>
+    <script src="../../static/js/main.js"></script>
+</body>
+
+</html>
